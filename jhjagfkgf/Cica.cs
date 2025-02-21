@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace jhjagfkgf
 {
@@ -16,6 +13,7 @@ namespace jhjagfkgf
 		string fajta;
 		string szin;
 		int rendetlensegSzint;
+		int rendetlensegSzintMax;
 		int fogyasztas;
 		bool ehes;
 		string nem;
@@ -28,6 +26,11 @@ namespace jhjagfkgf
 			this.fajta = fajta;
 			this.szin = szin;
 			this.rendetlensegSzint = rendetlensegSzint;
+			rendetlensegSzintMax = 100;
+			if (szin == "narancssárga")
+			{
+				rendetlensegSzintMax += 20;
+			}
 			this.fogyasztas = fogyasztas;
 			this.nem = nem;
 			ehes = true;
@@ -47,9 +50,8 @@ namespace jhjagfkgf
 			{
 				suly += (int)Math.Ceiling(fogyasztas * kajaSuly);
 			}
-
-
 		}
+
 		public void Alvas()
 		{
 			rendetlensegSzint = 0;
@@ -62,14 +64,13 @@ namespace jhjagfkgf
 
 		public void Ebredes()
 		{
-			rendetlensegSzint = 100;
+			rendetlensegSzint = rendetlensegSzintMax;
 			ehes = true;
 		}
 
 		public void Jatek(string[] jatekok)
 		{
 			int jatek;
-
 			do
 			{
 				jatek = random.Next(0, jatekok.Length);
@@ -78,9 +79,49 @@ namespace jhjagfkgf
 				{
 					Eves(0.25);
 				}
+				rendetlensegSzint += 10;
+			} while (rendetlensegSzint < rendetlensegSzintMax);
+		}
 
-				rendetlensegSzint -= 10;
-			} while (rendetlensegSzint - 10 > 0);
+		public void Orgedes()
+		{
+			kor++;
+			rendetlensegSzintMax -= 10;
+		}
+
+		public void Szeretgetes()
+		{
+			Console.WriteLine($"{nev}-t szeretgetik");
+			rendetlensegSzint -= 5;
+			if (rendetlensegSzint < 0) rendetlensegSzint = 0;
+		}
+
+
+		public void Felfedezes()
+		{
+			Console.WriteLine($"{nev} felfedez");
+			rendetlensegSzint -= 10;
+			suly -= 1;
+			if (rendetlensegSzint < 0) rendetlensegSzint = 0;
+		}
+
+		public void Nyavogas()
+		{
+			Console.WriteLine($"{nev} nyávog");
+			rendetlensegSzint += 5;
+		}
+
+		public void Futas()
+		{
+			Console.WriteLine($"{nev} fut");
+			suly -= 2;
+			rendetlensegSzint += 5;
+		}
+
+		public void Karmolas()
+		{
+			Console.WriteLine($"{nev} megkarmolt");
+			rendetlensegSzint += 15;
 		}
 	}
 }
